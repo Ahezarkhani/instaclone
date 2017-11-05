@@ -1,0 +1,61 @@
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>InstaClone</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+         <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Instaclone</a>
+              </div>
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="container">
+            <div class="row">
+              <form method="post" action="/createPost">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input name="imgURL" type="text" class="form-control" placeholder="A URL from Google!">
+                </div>
+                <div class="form-group">
+                  <label>Name</label>
+                  <input name="name" type="text" class="form-control" placeholder="What is your name">
+                </div>
+                <div class="form-group">
+                  <label>Caption</label>
+                  <input name="caption" type="text" class="form-control" placeholder="What is the picture about?">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                {% for post in posts%}
+                    <div class="col-md-4">
+                        <a href="/post/{{ post.id }}">
+                            <div class="image-post">
+                                <div class="image-area">
+                                    <img class="image" src="{{ post.imgURL }}">
+                                </div>
+                                <div class="caption-text">
+                                    {{ post.caption }}
+                                </div>
+                                <div class="postedby-text">
+                                    Posted by {{ post.postedBy }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
